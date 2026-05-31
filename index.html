@@ -572,7 +572,15 @@
       document.getElementById('gb-count').textContent = displayCount + ' resultaten gevonden (' + parts.join(', ') + ')';
     } else {
       displayCount = filtered.length;
-      document.getElementById('gb-count').textContent = displayCount + ' result' + (displayCount !== 1 ? 'aten' : 'aat') + ' gevonden';
+      var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
+      var countHightech = filtered.filter(function(d) { return d.hightech && !d.indoor_only; }).length;
+      var countBanen = displayCount - countIndoor - countHightech;
+      var parts = [];
+      if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
+      if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
+      if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
+      var suffix = parts.length > 0 ? ' (' + parts.join(', ') + ')' : '';
+      document.getElementById('gb-count').textContent = displayCount + ' result' + (displayCount !== 1 ? 'aten' : 'aat') + ' gevonden' + suffix;
     }
     document.querySelector('.gb-sort-row').style.display = (userLat && isPostcode) || activeType === 'hightech' || activeIndoor || activeVerlicht ? 'none' : 'flex';
 
