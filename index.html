@@ -560,6 +560,16 @@
       filtered.forEach(function(d) { countSeen[d.naam] = true; });
       displayCount = Object.keys(countSeen).length;
       document.getElementById('gb-count').textContent = displayCount + ' locatie' + (displayCount !== 1 ? 's' : '') + ' gevonden';
+    } else if (activeEis === 'Geen eis' || activeEis === 'NGF-Golfbaanpermissie' || activeEis === 'Handicap 54') {
+      displayCount = filtered.length;
+      var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
+      var countHightech = filtered.filter(function(d) { return d.hightech && !d.indoor_only; }).length;
+      var countBanen = displayCount - countIndoor - countHightech;
+      var parts = [];
+      if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
+      if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
+      if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
+      document.getElementById('gb-count').textContent = displayCount + ' resultaten gevonden (' + parts.join(', ') + ')';
     } else {
       displayCount = filtered.length;
       document.getElementById('gb-count').textContent = displayCount + ' result' + (displayCount !== 1 ? 'aten' : 'aat') + ' gevonden';
