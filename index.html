@@ -565,9 +565,12 @@
       var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
       var htNames = {}; filtered.forEach(function(d) { if (d.hightech && !d.indoor_only) htNames[d.naam] = true; });
       var countHightech = Object.keys(htNames).length;
-      var countBanen = filtered.filter(function(d) { return !d.indoor_only && !d.hightech; }).length;
+      var oefNames = {}; filtered.forEach(function(d) { if (d.type === 'oefenholes' && !d.indoor_only) oefNames[d.naam] = true; });
+      var countOefenholes = Object.keys(oefNames).length;
+      var countBanen = filtered.filter(function(d) { return !d.indoor_only && d.type !== 'oefenholes'; }).length;
       var parts = [];
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
+      if (countOefenholes > 0) parts.push(countOefenholes + ' locatie' + (countOefenholes !== 1 ? 's' : '') + ' met oefenholes');
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
       if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
       document.getElementById('gb-count').textContent = displayCount + ' resultaten gevonden (' + parts.join(', ') + ')';
@@ -576,9 +579,12 @@
       var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
       var htNames = {}; filtered.forEach(function(d) { if (d.hightech && !d.indoor_only) htNames[d.naam] = true; });
       var countHightech = Object.keys(htNames).length;
-      var countBanen = filtered.filter(function(d) { return !d.indoor_only && !d.hightech; }).length;
+      var oefNames = {}; filtered.forEach(function(d) { if (d.type === 'oefenholes' && !d.indoor_only) oefNames[d.naam] = true; });
+      var countOefenholes = Object.keys(oefNames).length;
+      var countBanen = filtered.filter(function(d) { return !d.indoor_only && d.type !== 'oefenholes'; }).length;
       var parts = [];
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
+      if (countOefenholes > 0) parts.push(countOefenholes + ' locatie' + (countOefenholes !== 1 ? 's' : '') + ' met oefenholes');
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
       if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
       var suffix = parts.length > 0 ? ' (' + parts.join(', ') + ')' : '';
