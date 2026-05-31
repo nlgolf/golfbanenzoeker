@@ -456,11 +456,11 @@
       <button id="gb-chip-verlicht" class="gb-chip" data-type="verlicht">Banen met verlichting</button>
       <button class="gb-chip" data-eis="Geen eis">Waar mag ik spelen zonder NGF-Golfbaanpermissie of handicap?</button>
       <button class="gb-chip" data-eis="NGF-Golfbaanpermissie">Waar mag ik spelen met NGF-Golfbaanpermissie?</button>
-      <button class="gb-chip" data-eis="Handicap 54">Banen toegankelijk voor hcp 54,0 - 45,1</button>
-      <button class="gb-chip" data-eis="Handicap 45">Voor hcp 54,0 - 36,1</button>
-      <button class="gb-chip" data-eis="Handicap 36">Voor hcp 54,0 - 28,1</button>
-      <button class="gb-chip" data-eis="Handicap 28">Voor hcp 54,0 - 24,1</button>
-      <button class="gb-chip" data-eis="Handicap 24">Voor hcp 24 en lager</button>
+      <button class="gb-chip" data-eis="Handicap 54">Waar mag ik spelen met hcp 54 tot 45,1?</button>
+      <button class="gb-chip" data-eis="Handicap 45">Banen waar hcp 45 of lager is vereist</button>
+      <button class="gb-chip" data-eis="Handicap 36">Banen waar hcp 36 of lager is vereist</button>
+      <button class="gb-chip" data-eis="Handicap 28">Banen waar hcp 28 of lager is vereist</button>
+      <button class="gb-chip" data-eis="Handicap 24">Banen waar hcp 24 of lager is vereist</button>
     </div>
   </div>
 </div>
@@ -531,7 +531,7 @@
       var hcpOrder = ['Geen eis', 'NGF-Golfbaanpermissie', 'Handicap 54', 'Handicap 45', 'Handicap 36', 'Handicap 28', 'Handicap 24'];
       var activeIdx = hcpOrder.indexOf(activeEis);
       var speeleisIdx = isNgf ? 1 : hcpOrder.indexOf(d.speeleisen);
-      var matchEis = !activeEis || (activeIdx >= 0 && speeleisIdx >= 0 && speeleisIdx <= activeIdx) || (activeIdx >= 0 && isNgf && activeIdx >= 1);
+      var matchEis = !activeEis || (activeEis === 'Handicap 24' ? d.speeleisen === 'Handicap 24' : activeEis === 'Handicap 28' ? (d.speeleisen === 'Handicap 28' || d.speeleisen === 'Handicap 24') : activeEis === 'Handicap 36' ? (d.speeleisen === 'Handicap 36' || d.speeleisen === 'Handicap 28' || d.speeleisen === 'Handicap 24') : activeEis === 'Handicap 45' ? (d.speeleisen === 'Handicap 45' || d.speeleisen === 'Handicap 36' || d.speeleisen === 'Handicap 28' || d.speeleisen === 'Handicap 24') : activeEis === 'Handicap 54' ? (d.speeleisen === 'Handicap 54' || isNgf || d.speeleisen === 'Geen eis') : (activeIdx >= 0 && speeleisIdx >= 0 && speeleisIdx <= activeIdx) || (activeIdx >= 0 && isNgf && activeIdx >= 1));
       return matchSearch && matchProv && matchType && matchEis;
     });
 
@@ -967,7 +967,13 @@
     document.querySelectorAll('#gb-eis-chips .gb-chip').forEach(function(c) { c.classList.remove('active'); });
     btn.classList.add('active');
     // Bij filter "Handicap 24": automatisch sorteren op speeleisen (strengste eis eerst)
-    if (activeEis === 'Handicap 24') {
+    if (activeEis === 'Handicap 28' || activeEis === 'Handicap 36' || activeEis === 'Handicap 45') {
+      activeSortEis = 'speeleisen_desc';
+      activeSortLengte = '';
+      document.querySelectorAll('.gb-sort-btn').forEach(function(b) { b.classList.remove('active'); });
+      var sortDescBtn = document.getElementById('gb-sort-desc');
+      if (sortDescBtn) sortDescBtn.classList.add('active');
+    } else if (activeEis === 'Handicap 24') {
       activeSortEis = 'speeleisen_asc';
       activeSortLengte = '';
       document.querySelectorAll('.gb-sort-btn').forEach(function(b) { b.classList.remove('active'); });
