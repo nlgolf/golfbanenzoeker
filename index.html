@@ -563,8 +563,9 @@
     } else if (activeEis === 'Geen eis' || activeEis === 'NGF-Golfbaanpermissie' || activeEis === 'Handicap 54') {
       displayCount = filtered.length;
       var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
-      var countHightech = filtered.filter(function(d) { return d.hightech && !d.indoor_only; }).length;
-      var countBanen = displayCount - countIndoor - countHightech;
+      var htNames = {}; filtered.forEach(function(d) { if (d.hightech && !d.indoor_only) htNames[d.naam] = true; });
+      var countHightech = Object.keys(htNames).length;
+      var countBanen = filtered.filter(function(d) { return !d.indoor_only && !d.hightech; }).length;
       var parts = [];
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
@@ -573,8 +574,9 @@
     } else {
       displayCount = filtered.length;
       var countIndoor = filtered.filter(function(d) { return d.indoor_only; }).length;
-      var countHightech = filtered.filter(function(d) { return d.hightech && !d.indoor_only; }).length;
-      var countBanen = displayCount - countIndoor - countHightech;
+      var htNames = {}; filtered.forEach(function(d) { if (d.hightech && !d.indoor_only) htNames[d.naam] = true; });
+      var countHightech = Object.keys(htNames).length;
+      var countBanen = filtered.filter(function(d) { return !d.indoor_only && !d.hightech; }).length;
       var parts = [];
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
