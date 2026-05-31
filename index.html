@@ -518,11 +518,11 @@
     var sortby = 'naam';
 
     var isPostcode = /^\d{4}/.test(q.replace(/\s/g,''));
+    var typeFilterTypes = ['grote baan','par 3/4','par 3','oefenholes','shortgolf/pitch&putt'];
+    var isTypeFilter = typeFilterTypes.indexOf(activeType) !== -1;
     var filtered = DATA.filter(function(d) {
       var matchSearch = !q || isPostcode || d.naam.toLowerCase().indexOf(q) !== -1 || d.omschrijving.toLowerCase().indexOf(q) !== -1;
       var matchProv = !prov || d.provincie === prov;
-      var typeFilterTypes = ['grote baan','par 3/4','par 3','oefenholes','shortgolf/pitch&putt'];
-      var isTypeFilter = typeFilterTypes.indexOf(activeType) !== -1;
       var locHasActiveType = isTypeFilter && DATA.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); });
       var matchType = activeVerlicht ? d.verlicht :
         activeIndoor ? (d.indoor || d.indoor_only) :
@@ -614,6 +614,7 @@
     // If hightech filter active, also include all records of hightech locations
     var displayRecords = filtered;
     displayRecords.forEach(function(d) {
+      // Hightech and indoor cards: only render once per location name
       if (!processedNames[d.naam]) {
         processedNames[d.naam] = true;
         // If this location has a high-tech range, add that card first
@@ -706,9 +707,7 @@
       }
       // Add the regular card for this record (skip when hightech filter is active)
       if (activeType !== 'hightech' && !activeIndoor) {
-        if (!isTypeFilter || (d.type === activeType || d.type.trim() === activeType) || d.indoor_only) {
-          allCards.push(renderCard(d, isPostcode));
-        }
+        allCards.push(renderCard(d, isPostcode));
       }
     });
 
