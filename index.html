@@ -572,7 +572,7 @@
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
       if (countOefenholes > 0) parts.push(countOefenholes + ' locatie' + (countOefenholes !== 1 ? 's' : '') + ' met oefenholes');
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
-      if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
+      if (countIndoor > 0) parts.push(countIndoor + ' locatie' + (countIndoor !== 1 ? 's' : '') + ' met indoor simulatorgolf');
       document.getElementById('gb-count').textContent = displayCount + ' resultaten gevonden (' + parts.join(', ') + ')';
     } else {
       displayCount = filtered.length;
@@ -586,7 +586,7 @@
       if (countBanen > 0) parts.push(countBanen + ' lus' + (countBanen !== 1 ? 'sen' : ''));
       if (countOefenholes > 0) parts.push(countOefenholes + ' locatie' + (countOefenholes !== 1 ? 's' : '') + ' met oefenholes');
       if (countHightech > 0) parts.push(countHightech + ' high-tech range' + (countHightech !== 1 ? 's' : ''));
-      if (countIndoor > 0) parts.push(countIndoor + ' indoor simulator' + (countIndoor !== 1 ? 's' : ''));
+      if (countIndoor > 0) parts.push(countIndoor + ' locatie' + (countIndoor !== 1 ? 's' : '') + ' met indoor simulatorgolf');
       var suffix = parts.length > 0 ? ' (' + parts.join(', ') + ')' : '';
       document.getElementById('gb-count').textContent = displayCount + ' result' + (displayCount !== 1 ? 'aten' : 'aat') + ' gevonden' + suffix;
     }
