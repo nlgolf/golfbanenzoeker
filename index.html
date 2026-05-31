@@ -523,13 +523,14 @@
       var matchProv = !prov || d.provincie === prov;
       var typeFilterTypes = ['grote baan','par 3/4','par 3','oefenholes','shortgolf/pitch&putt'];
       var isTypeFilter = typeFilterTypes.indexOf(activeType) !== -1;
+      var locHasActiveType = isTypeFilter && DATA.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); });
       var matchType = activeVerlicht ? d.verlicht :
         activeIndoor ? (d.indoor || d.indoor_only) :
         (!activeType ||
         (activeType === 'hightech' ? (d.hightech || d.indoor) && !d.indoor_only :
         isTypeFilter ? (
           (d.type === activeType || d.type.trim() === activeType) ||
-          (d.indoor_only && DATA.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); }))
+          (d.indoor_only && locHasActiveType)
         ) :
         (d.type === activeType || d.type.trim() === activeType)));
       var ngfVars = ['NGF-Golfbaanpermissie','NGF-golfbaanpermissie','NGF-Baanpermissie','NGF-baanpermissie'];
@@ -619,7 +620,7 @@
         if (d.hightech && !htSeen[d.naam]) {
           htSeen[d.naam] = true;
           // Only show hightech card when hightech filter active or no special filter
-          if ((activeType === 'hightech' || (!activeType && !activeIndoor) || isTypeFilter) && !activeVerlicht) {
+          if ((activeType === 'hightech' || (!activeType && !activeIndoor) || (isTypeFilter && filtered.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); }))) && !activeVerlicht) {
             allCards.push('<div class="gb-card-hightech">' +
               '<div class="gb-row1">' +
                 '<div class="gb-row1-left">' +
