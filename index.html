@@ -529,7 +529,7 @@
         (activeType === 'hightech' ? (d.hightech || d.indoor) && !d.indoor_only :
         isTypeFilter ? (
           (d.type === activeType || d.type.trim() === activeType) ||
-          ((d.hightech && !d.indoor_only) || d.indoor_only) && DATA.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); })
+          (d.indoor_only && DATA.some(function(e) { return e.naam === d.naam && (e.type === activeType || e.type.trim() === activeType); }))
         ) :
         (d.type === activeType || d.type.trim() === activeType)));
       var ngfVars = ['NGF-Golfbaanpermissie','NGF-golfbaanpermissie','NGF-Baanpermissie','NGF-baanpermissie'];
@@ -619,7 +619,7 @@
         if (d.hightech && !htSeen[d.naam]) {
           htSeen[d.naam] = true;
           // Only show hightech card when hightech filter active or no special filter
-          if ((activeType === 'hightech' || (!activeType && !activeIndoor)) && !activeVerlicht) {
+          if ((activeType === 'hightech' || (!activeType && !activeIndoor) || isTypeFilter) && !activeVerlicht) {
             allCards.push('<div class="gb-card-hightech">' +
               '<div class="gb-row1">' +
                 '<div class="gb-row1-left">' +
