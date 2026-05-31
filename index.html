@@ -966,6 +966,20 @@
     activeIndoor = false;
     document.querySelectorAll('#gb-eis-chips .gb-chip').forEach(function(c) { c.classList.remove('active'); });
     btn.classList.add('active');
+    // Bij filter "Handicap 24": automatisch sorteren op speeleisen (strengste eis eerst)
+    if (activeEis === 'Handicap 24') {
+      activeSortEis = 'speeleisen_asc';
+      activeSortLengte = '';
+      document.querySelectorAll('.gb-sort-btn').forEach(function(b) { b.classList.remove('active'); });
+      var sortAscBtn = document.getElementById('gb-sort-asc');
+      if (sortAscBtn) sortAscBtn.classList.add('active');
+    } else {
+      activeSortEis = '';
+      activeSortLengte = '';
+      document.querySelectorAll('.gb-sort-btn').forEach(function(b) { b.classList.remove('active'); });
+      var sortNaamBtn = document.getElementById('gb-sort-naam');
+      if (sortNaamBtn) sortNaamBtn.classList.add('active');
+    }
     render();
   });
 
