@@ -706,7 +706,9 @@
       }
       // Add the regular card for this record (skip when hightech filter is active)
       if (activeType !== 'hightech' && !activeIndoor) {
-        allCards.push(renderCard(d, isPostcode));
+        if (!isTypeFilter || (d.type === activeType || d.type.trim() === activeType) || d.indoor_only) {
+          allCards.push(renderCard(d, isPostcode));
+        }
       }
     });
 
