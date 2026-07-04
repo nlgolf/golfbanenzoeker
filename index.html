@@ -507,7 +507,7 @@
     if (!activeEis) return true;
     var e = lus.speeleisen;
     var isNgf = NGF_VARS.indexOf(e) !== -1;
-    if (activeEis === 'Geen eis')              return true;
+    if (activeEis === 'Geen eis')              return e === 'Geen eis';
     if (activeEis === 'NGF-Golfbaanpermissie') return isNgf || eisRank(e) >= 5;
     if (activeEis === 'Handicap 54')           return e === 'Handicap 54' || isNgf || e === 'Geen eis';
     if (activeEis === 'Handicap 45')           return ['Handicap 45','Handicap 36','Handicap 28','Handicap 24'].indexOf(e) !== -1;
