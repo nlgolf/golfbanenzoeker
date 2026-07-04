@@ -642,6 +642,7 @@
       if (loc.heeft_hightech && !isEisOnly) {
         var showHt = (activeType === 'hightech') ||
           (!activeType && !activeIndoor && !activeVerlicht && !activeEis) ||
+          (activeIndoor && loc.heeft_indoor) ||
           (isTypeFilter && loc.lussen.some(function(l) { return !l.indoor_only && (l.type === activeType || l.type.trim() === activeType); })) ||
           (activeEis && !isEisOnly);
         if (showHt) {
@@ -659,7 +660,8 @@
         }
       }
 
-      if (activeIndoor || activeType === 'hightech') return;
+      if (activeType === 'hightech') return;
+      if (activeIndoor && !loc.heeft_indoor) return;
 
       // 3. Regular lus cards
       loc.lussen.forEach(function(lus) {
